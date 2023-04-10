@@ -1,40 +1,89 @@
 import React from 'react';
 import {
   ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
+  Input,
+  Flex,
   Grid,
   theme,
+  Heading,
+  GridItem,
+  Button,
+  Select,
 } from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
+import NetworkGraph from './NetworkGraph';
+import Maps from './Maps';
+
+function handleClick() {
+  console.log('Button clicked!');
+}
+
+function handleFileChange(fileInput) {
+  console.log('File changed!');
+}
+
+// handle the toggle
+function option(number) {
+  if (number === 1) {
+    return <NetworkGraph />;
+  }
+}
+
+const Showing = () => {
+  return option(1);
+};
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
-      </Box>
+      <Grid
+        h="100vh"
+        templateColumns="repeat(5,1fr)"
+        templateRows="auto 1fr auto"
+        gap={4}
+      >
+        <GridItem
+          as="aside"
+          colSpan="1"
+          rowSpan="2"
+          bg="#1d3258"
+          minHeight="50"
+          py="30px"
+          borderRadius="20px 20px 20px 20px"
+          justifySelf="center"
+        >
+          <Input
+            colorScheme="blue"
+            type="file"
+            size="md"
+            variant="outline"
+            onChange={e => handleFileChange(e)}
+          />
+
+          <Select variant="filled" placeholder="Select Algorithm">
+            <option value="option1">A*</option>
+            <option value="option2">UCS</option>
+          </Select>
+
+          <Button gridRow="3" colorScheme="blue" onClick={handleClick}>
+            Run
+          </Button>
+        </GridItem>
+        <GridItem colSpan="4" rowSpan="1" alignItems="center">
+          <Flex py="20px" alignItems="center">
+            <Heading as="h1" fontSize="2.5em" textAlign={'center'}>
+              Shortest Path Finder
+            </Heading>
+          </Flex>
+        </GridItem>
+        <GridItem
+          colSpan="4"
+          rowSpan="1"
+          bg="#1d3258"
+          borderRadius="20px 20px 20px 20px"
+        >
+          <Maps />
+        </GridItem>
+      </Grid>
     </ChakraProvider>
   );
 }
