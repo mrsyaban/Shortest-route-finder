@@ -12,14 +12,18 @@ function convertFile(jsonFile) {
   const edges = [];
 
   // if not directed graph
+  let count = 1;
     for (let i = 0; i < adjMatrix.length; i++) {
         for (let j = 0; j < adjMatrix[i].length; j++) {
-            if (adjMatrix[i][j] !== "0") {
+            if (adjMatrix[i][j] !== 0 && i!==j) {
                 const edge = {};
-                edge.length = String(adjMatrix[i][j]);
-                edge.source = String(j);
-                edge.target = String(i);
+                edge.id = String(count);
+                edge.length = adjMatrix[i][j];
+                edge.source = String(j+1);
+                edge.target = String(i+1);
+                edge.label = "Node" + String(count)
                 edges.push(edge);
+                count++;
             }
         }
     }
