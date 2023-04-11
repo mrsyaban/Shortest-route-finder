@@ -10,8 +10,8 @@ import {
   Button,
   Select,
 } from '@chakra-ui/react';
-import NetworkGraph from './NetworkGraph';
-import Maps from './Maps';
+import NetworkGraph from './components/NetworkGraph';
+import Maps from './components/Maps';
 
 function handleClick() {
   console.log('Button clicked!');
