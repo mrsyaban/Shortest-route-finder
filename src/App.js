@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   ChakraProvider,
   Input,
@@ -10,15 +10,14 @@ import {
   Button,
   Select,
 } from '@chakra-ui/react';
-import NetworkGraph from './components/NetworkGraph';
+// import NetworkGraph from './components/NetworkGraph';
 import Maps from './components/Maps';
+import { extend } from 'leaflet';
+import { HandleFileChange } from './service/Utility';
+import { Sigma} from 'react-sigma';
 
 function handleClick() {
-  console.log('Button clicked!');
-}
-
-function handleFileChange(fileInput) {
-  console.log('File changed!');
+  console.log(this);
 }
 
 // handle the toggle
@@ -32,8 +31,55 @@ const Showing = () => {
   return option(1);
 };
 
-function App() {
-  return (
+class NetworkGraph extends Component {
+  render(){
+    return (
+      <Sigma
+        graph={this.props.graph}
+        settings={{
+          drawEdges: true,
+          drawLabels: true,
+          labelThreshold: 6,
+          defaultLabelSize: 14,
+          defaultEdgeLabelSize: 14,
+          edgeLabelSize: 'proportional',
+        }}
+        style={{ height: '500px', width: '100%' }}
+      />
+    );
+  }
+
+};
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: {},
+      prevData: null,
+    };
+    this.onFileChange = this.onFileChange.bind(this);
+  }
+
+  onFileChange = (event) => {
+    HandleFileChange(event, (convertedMatrix) => {
+      this.setState({ data: convertedMatrix });
+    });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.data !== this.state.data) {
+      console.log('Data has changed:', this.state.data);
+    }
+  }
+
+  logData() {
+    console.log("button click!");
+    console.log(this.statedata);
+  }
+
+  render (){
+    return(
     <ChakraProvider theme={theme}>
       <Grid
         h="100vh"
@@ -56,7 +102,7 @@ function App() {
             type="file"
             size="md"
             variant="outline"
-            onChange={e => handleFileChange(e)}
+            onChange={this.onFileChange}
           />
 
           <Select variant="filled" placeholder="Select Algorithm">
@@ -64,7 +110,7 @@ function App() {
             <option value="option2">UCS</option>
           </Select>
 
-          <Button gridRow="3" colorScheme="blue" onClick={handleClick}>
+          <Button gridRow="3" colorScheme="blue" onClick={this.logData}>
             Run
           </Button>
         </GridItem>
@@ -81,11 +127,11 @@ function App() {
           bg="#1d3258"
           borderRadius="20px 20px 20px 20px"
         >
-          <Maps />
+          <NetworkGraph graph={this.state.data}/>
         </GridItem>
       </Grid>
     </ChakraProvider>
-  );
+  )};
 }
 
 export default App;

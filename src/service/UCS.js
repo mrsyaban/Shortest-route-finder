@@ -8,7 +8,7 @@ class UCS {
 
         this.frontier = new PriorityQueue({ comparator: (a, b) => a.cost - b.cost });
         this.frontier.queue({ cost: 0, node: start });
-        
+
         this.explored = new Set();
         this.cost = null;
     }
@@ -26,9 +26,9 @@ class UCS {
             this.explored.add(current);
             for (let neighbor = 0; neighbor < this.graph.length; neighbor++) {
                 if (this.graph[current][neighbor] !== 0 && !this.explored.has(neighbor)) {
-                const neighborCost = this.graph[current][neighbor];
-                const newCost = cost + neighborCost;
-                this.frontier.queue({ cost: newCost, node: neighbor });
+                    const neighborCost = this.graph[current][neighbor];
+                    const newCost = cost + neighborCost;
+                    this.frontier.queue({ cost: newCost, node: neighbor });
                 }
             }
         }
