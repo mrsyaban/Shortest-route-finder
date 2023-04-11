@@ -1,81 +1,134 @@
 const PriorityQueue = require('js-priority-queue');
 
 class UCS {
-    constructor(start, goal, graph) {
-        this.start = start;
-        this.goal = goal;
-        this.graph = graph;
-    
-        this.frontier = new PriorityQueue({ comparator: (a, b) => a.cost - b.cost });
-        this.frontier.queue({ cost: 0, node: start });
-    
-        this.explored = new Set();
-        this.cost = null;
-        this.cameFrom = {};
-        this.cameFrom[start] = null;
-    }
-  
-    search() {
-        while (this.frontier.length > 0) {
-            const state = this.frontier.dequeue();
-            const cost = state.cost;
-            const current = state.node;
-            if (current === this.goal) {
-                this.cost = cost;
-                return;
-            }
-    
-            this.explored.add(current);
-            for (let neighbor = 0; neighbor < this.graph.length; neighbor++) {
-                if (this.graph[current][neighbor] !== 0 && !this.explored.has(neighbor)) {
-                    const neighborCost = this.graph[current][neighbor];
-                    const newCost = cost + neighborCost;
-                    this.frontier.queue({ cost: newCost, node: neighbor });
-                    this.cameFrom[neighbor] = current;
-                }
-            }
-        }
-    }
-  
-    shortestPath() {
-        if (this.cost === null) {
-            return null;
-        }
-        let path = [this.goal];
-        let current = this.goal;
-        while (current !== this.start) {
-            current = this.cameFrom[current];
-            path.unshift(current);
-        }
-        return path;
-    }
-}
-  
-graph = [
-[0, 75, 0, 140, 0, 0, 0, 0, 0,0,0,0, 118],
-[75, 0, 71, 0, 0, 0 ,0,0,0,0,0,0,0],
-[0, 71, 0, 151, 0, 0, 0, 0,0,0,0,0,0],
-[140, 0, 151, 0, 99, 0 ,0,0,80,0,0,0,0],
-[0, 0, 0, 99, 0, 211 ,0,0,0,0,0,0,0],
-[0, 0, 0, 0, 211, 0 ,101, 0, 0, 0,0 ,0,0],
-[0, 0, 0, 0, 0, 101 ,0, 138, 97, 0, 0, 0, 0],
-[0, 0, 0, 0, 0, 0 , 138, 0, 146, 0, 0, 0, 0],
-[0, 0, 0, 80, 0, 0 ,97,146, 0, 120,0,0,0],
-[0, 0, 0, 0, 0, 0, 0, 0, 120, 0, 75, 0, 0],
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 75, 0, 70, 0],
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 70, 0, 111],
-[118, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 111, 0],
-];
+  constructor(start, goal, graph) {
+    this.start = start;
+    this.goal = goal;
+    this.graph = graph;
 
-const start = 0;
-const goal = 8;
-const ucs = new UCS(start, goal, graph);
-ucs.search();
+    this.frontier = new PriorityQueue({
+      comparator: (a, b) => a.cost - b.cost,
+    });
+    this.frontier.queue({ cost: 0, node: start });
 
-if (ucs.cost !== null) {
-    console.log(`Biaya minimum dari ${start} ke ${goal} adalah ${ucs.cost}`);
-    const path = ucs.shortestPath();
-    console.log(`Jalur terpendek dari ${start} ke ${goal} adalah: ${path.join(' -> ')}`);
-    } else {
-    console.log(`Tidak ditemukan jalur dari ${start} ke ${goal}`);
+    this.explored = new Set();
+    this.cost = null;
+    this.cameFrom = {};
+    this.cameFrom[start] = null;
+  }
+
+  search() {
+    while (this.frontier.length > 0) {
+      const state = this.frontier.dequeue();
+      const cost = state.cost;
+      const current = state.node;
+      if (current === this.goal) {
+        this.cost = cost;
+        return;
+      }
+
+      this.explored.add(current);
+      for (let neighbor = 0; neighbor < this.graph.length; neighbor++) {
+        if (
+          this.graph[current][neighbor] !== 0 &&
+          !this.explored.has(neighbor)
+        ) {
+          const neighborCost = this.graph[current][neighbor];
+          const newCost = cost + neighborCost;
+          this.frontier.queue({ cost: newCost, node: neighbor });
+          this.cameFrom[neighbor] = current;
+        }
+      }
+    }
+  }
+
+  shortestPath() {
+    if (this.cost === null) {
+      return null;
+    }
+    let path = [this.goal];
+    let current = this.goal;
+    while (current !== this.start) {
+      current = this.cameFrom[current];
+      path.unshift(current);
+    }
+    return path;
+  }
 }
+
+function isResult(start, goal, edge) {
+  if (
+    (edge.source === start && edge.target === goal) ||
+    (edge.source === goal && edge.target === start)
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+export const RunUCS = (graph, matrix, start, goal, callback) => {
+  console.log('start: ', start, 'goal: ', goal);
+  const ucs = new UCS(Number(start), Number(goal), matrix);
+  ucs.search();
+  const resPath = ucs.shortestPath();
+  console.log("resPath: ", resPath);
+  
+  // color nodes
+  const newNodes = [];
+  for (let i = 0; i < graph.nodes.length; i++) {
+    const node = { ...graph.nodes[i] };
+    if (resPath.some((res) => res === Number(graph.nodes[i].id))) {
+      node.color = '#b71010';
+    }
+    newNodes.push(node);
+  }
+
+  // color edges
+  const newEdges = [];
+  for (let i = 0; i < graph.edges.length; i++) {
+    const edge = { ...graph.edges[i] };
+    for (let j = 0; j < resPath.length - 1; j++) {
+      if (isResult(String(resPath[j]), String(resPath[j + 1]), edge)) {
+        edge.color = '#b71010';
+      }
+    }
+    newEdges.push(edge);
+  }
+
+  const newGraph = {
+    nodes: newNodes,
+    edges: newEdges,
+  };
+
+  callback(newGraph);
+};
+
+// graph = [
+// [0, 75, 0, 140, 0, 0, 0, 0, 0,0,0,0, 118],
+// [75, 0, 71, 0, 0, 0 ,0,0,0,0,0,0,0],
+// [0, 71, 0, 151, 0, 0, 0, 0,0,0,0,0,0],
+// [140, 0, 151, 0, 99, 0 ,0,0,80,0,0,0,0],
+// [0, 0, 0, 99, 0, 211 ,0,0,0,0,0,0,0],
+// [0, 0, 0, 0, 211, 0 ,101, 0, 0, 0,0 ,0,0],
+// [0, 0, 0, 0, 0, 101 ,0, 138, 97, 0, 0, 0, 0],
+// [0, 0, 0, 0, 0, 0 , 138, 0, 146, 0, 0, 0, 0],
+// [0, 0, 0, 80, 0, 0 ,97,146, 0, 120,0,0,0],
+// [0, 0, 0, 0, 0, 0, 0, 0, 120, 0, 75, 0, 0],
+// [0, 0, 0, 0, 0, 0, 0, 0, 0, 75, 0, 70, 0],
+// [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 70, 0, 111],
+// [118, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 111, 0],
+// ];
+
+// const start = 0;
+// const goal = 8;
+// const ucs = new UCS(start, goal, graph);
+// ucs.search();
+
+// if (ucs.cost !== null) {
+//     console.log(`Biaya minimum dari ${start} ke ${goal} adalah ${ucs.cost}`);
+//     const path = ucs.shortestPath();
+//     console.log(`Jalur terpendek dari ${start} ke ${goal} adalah: ${path.join(' -> ')}`);
+//     } else {
+//     console.log(`Tidak ditemukan jalur dari ${start} ke ${goal}`);
+// }

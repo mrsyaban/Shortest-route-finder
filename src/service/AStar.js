@@ -49,6 +49,10 @@ class AStar {
       return path;
     }
 }
+
+export const RunAStar = (event, callback) => {
+    
+}
   
 // // Contoh
 // const start = 0;
