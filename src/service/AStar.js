@@ -51,7 +51,7 @@ class AStar {
 }
 
 export const RunAStar = (event, callback) => {
-    
+
 }
   
 // // Contoh

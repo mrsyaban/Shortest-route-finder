@@ -70,7 +70,7 @@ function isResult(start, goal, edge) {
 export const RunUCS = (graph, matrix, start, goal, callback) => {
   console.log('start: ', start, 'goal: ', goal);
   console.log('matrix: ', matrix);
-  const ucs = new UCS(Number(start), Number(goal), matrix);
+  const ucs = new UCS(Number(start)-1, Number(goal)-1, matrix);
   ucs.search();
   const resPath = ucs.shortestPath();
   console.log("resPath: ", resPath);
@@ -79,7 +79,8 @@ export const RunUCS = (graph, matrix, start, goal, callback) => {
   const newNodes = [];
   for (let i = 0; i < graph.nodes.length; i++) {
     const node = { ...graph.nodes[i] };
-    if (resPath.some((res) => res === Number(graph.nodes[i].id))) {
+    node.color = "#000000";
+    if (resPath.some((res) => res+1 === Number(graph.nodes[i].id))) {
       node.color = '#b71010';
     }
     newNodes.push(node);
@@ -89,8 +90,10 @@ export const RunUCS = (graph, matrix, start, goal, callback) => {
   const newEdges = [];
   for (let i = 0; i < graph.edges.length; i++) {
     const edge = { ...graph.edges[i] };
+    edge.color = "#000000";
     for (let j = 0; j < resPath.length - 1; j++) {
-      if (isResult(String(resPath[j]), String(resPath[j + 1]), edge)) {
+      if (isResult(String(resPath[j]+1), String(resPath[j + 1]+1), edge)) {
+        console.log("edge: ", resPath[j], resPath[j+1]);
         edge.color = '#b71010';
       }
     }

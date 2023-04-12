@@ -25,7 +25,7 @@ import Maps from './components/Maps';
 import { extend } from 'leaflet';
 import { HandleFileChange } from './service/Utility';
 // import NetworkGraph from './components/NetworkGraph';
-import { Sigma } from 'react-sigma';
+import { Sigma, EdgeShapes, CustomEdge } from 'react-sigma';
 import { RunUCS } from './service/UCS';
 import { RunAStar } from './service/AStar';
 import { useDisclosure } from '@chakra-ui/react';
@@ -86,38 +86,41 @@ const App = () => {
   const [start, setStart] = React.useState('');
   const [goal, setGoal] = React.useState('');
   const [matrix, setMatrix] = React.useState([]);
+  const [cordinate, setCoor] = React.useState([]);
 
   const NetworkGraph = () => {
     const [graphData, setGraph] = React.useState(data);
-    console.log("yang lama: ", graphData);
-    console.log("input: ", data);
     
     React.useEffect(() => {
       setGraph(data);
     }, [data]);
 
-    console.log("yang baru: ",graphData);
+    console.log("Graf : ",graphData);
+
     return (
       <Sigma
         graph={graphData}
         settings={{
-          drawEdges: true,
+          renderer: 'canvas',
+          labelOffset: 10, labelColor: "#000000",
+          labelThreshold: 0,
+          defaultEdgeType: "bold",
           drawLabels: true,
-          labelThreshold: 6,
-          defaultLabelSize: 14,
-          defaultEdgeLabelSize: 14,
-          edgeLabelSize: 'proportional',
+          defaultLabelSize: 30,
+          defaultEdgeLabelSize: 30,
         }}
         style={{ height: '500px', width: '100%' }}
-      />
+      >
+      <EdgeShapes default="curvedLine"/>
+      </Sigma>
     );
   };
 
   const onFileChange = event => {
-    HandleFileChange(event, (convertedMatrix, adjMatrix) => {
+    HandleFileChange(event, (convertedMatrix, adjMatrix, coor) => {
       setData(convertedMatrix);
       setMatrix(adjMatrix);
-      console.log("hanan:", adjMatrix);
+      setCoor(coor);
     });
   };
 
@@ -126,7 +129,6 @@ const App = () => {
   };
 
   const runShortestPath = () => {
-    console.log('algo: ', algo, typeof(algo));
     if (algo === "1") {
       // RunAStar(data, newData => {
       //   setData(newData);
@@ -135,7 +137,6 @@ const App = () => {
       console.log('masuk ucs');
       RunUCS(data, matrix, start, goal, newData => {
         setData(newData);
-        console.log('ucs: ', data);
       });
     } else {
       return <NoAlgorithmAlert />;
@@ -160,28 +161,24 @@ const App = () => {
             </Heading>
         </GridItem>
         <GridItem colSpan={1} rowSpan={7} margin='10px' rounded='md' bg='#1d3258'>
-          <Input
+        <Grid
+        h='500px'
+        templateColumns='repeat(1, 1fr)'
+        templateRows='repeat(5, 1fr)'
+        gap={4}
+      >
+        <GridItem py='10'>
+        <Input
             colorScheme="blue"
             type="file"
             size="md"
             variant="outline"
             onChange={onFileChange}
           />
+        </GridItem>
 
-          <Select
-            variant="filled"
-            placeholder="Select Algorithm"
-            onChange={onAlgoChange}
-          >
-            <option value="1">A*</option>
-            <option value="2">UCS</option>
-          </Select>
-
-          <Button gridRow="3" bgGradient="linear(to-r, teal.500, blue.500)" _hover={{ bgGradient: "linear(to-r, blue.500, teal.500)" }} colorScheme="blue" onClick={runShortestPath}>
-            Run
-          </Button>
-
-          <Stack spacing={1}>
+        <GridItem >
+        <Stack spacing={1}>
             <Input
               variant="outline"
               placeholder="input start node"
@@ -197,14 +194,36 @@ const App = () => {
               }}
             />
           </Stack>
+          <Select
+            variant="filled"
+            placeholder="Select Algorithm"
+            onChange={onAlgoChange}
+          >
+            <option value="1">A*</option>
+            <option value="2">UCS</option>
+          </Select>
+        </GridItem>
+        <GridItem align='center' py='10' >
+          <Button gridRow="3" bgGradient="linear(to-r, teal.500, blue.500)" _hover={{ bgGradient: "linear(to-r, blue.500, teal.500)" }} colorScheme="blue" onClick={runShortestPath}>
+          Run
+          </Button>
         </GridItem>
 
-        <GridItem colSpan={4} rowSpan={6} rounded='md' py='10' bg='papayawhip'>
+        <GridItem  >
+        </GridItem>
+
+        <GridItem  >
+        </GridItem>
+        </Grid>
+        </GridItem>
+
+        <GridItem colSpan={4} rowSpan={6} margin='10px' rounded='md' bg='papayawhip'>
 
         <NetworkGraph/>
+
         </GridItem>
 
-        <GridItem colSpan={4} rowSpan={1} rounded='md' bg='#1d3258'>
+        <GridItem colSpan={4} rowSpan={1} margin='10px' rounded='md' bg='#1d3258'>
         </GridItem>
       </Grid>
     </ChakraProvider>
