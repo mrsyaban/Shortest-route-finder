@@ -12,8 +12,6 @@ class AStar {
         this.gScore.set(start, 0);
     }
 
-
-
     search() {
         while (this.frontier.length > 0) {
             this.frontier.sort((a, b) => a.cost - b.cost);
