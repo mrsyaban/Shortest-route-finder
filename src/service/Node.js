@@ -1,9 +1,10 @@
 class Node {
-    constructor() {
+    constructor(id) {
+        this.id = id;
         this.path = [];
         this.visited = false;
-        this.distance = 0.0;
         this.adjacent = {};
+        this.totalDist = 0.0;
     }
 
     /* Getter */
@@ -19,9 +20,25 @@ class Node {
         return this.distance;
     }
 
+    getAdjacent(){
+        return this.adjacent;
+    }
+
+    getId(){
+        return this.id;
+    }
+
+    getTotal(){
+        return this.totalDist;
+    }
+
     /* Setter */
     hasVisited(){
         this.visited = true;
+    }
+
+    resetVisited(){
+        this.visited = false;
     }
 
     addPath(nodeName){
@@ -32,8 +49,9 @@ class Node {
         this.distance = dist;
     }
 
-    addAdjacent(newNode, newValue){
-        this.adjacent[newNode] = newValue;
+    addAdjacent(newNode, nodeDist){
+        this.adjacent[newNode] = nodeDist;
     }
+
 
 }

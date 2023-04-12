@@ -56,8 +56,8 @@ class AStar {
 
 function isResult(start, goal, edge) {
     if (
-      (edge.source === start && edge.target === goal) ||
-      (edge.source === goal && edge.target === start)
+      (edge.from === start && edge.to === goal) ||
+      (edge.from === goal && edge.to === start)
     ) {
       return true;
     } else {
@@ -109,7 +109,7 @@ export const RunAStar = (graph, matrix, start, goal, coordinates, callback) => {
       edges: newEdges,
     };
   
-    callback(newGraph);
+    callback(newGraph, astar.gScore.get(Number(goal)-1));
 };
   
   

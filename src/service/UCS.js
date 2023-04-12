@@ -105,7 +105,7 @@ export const RunUCS = (graph, matrix, start, goal, callback) => {
     edges: newEdges,
   };
 
-  callback(newGraph);
+  callback(newGraph, ucs.cost);
 };
 
 // graph = [

@@ -1,5 +1,3 @@
-import { list } from "@chakra-ui/react";
-
 function convertFile(jsonFile) {
     const obj = JSON.parse(jsonFile);
     const adjMatrix = obj.adjacencyMatrix[0].map(row => row.slice());
@@ -61,3 +59,4 @@ export const HandleFileChange = (event, callback) => {
       console.error(`Error handling file: ${error}`);
     }
 };
+
