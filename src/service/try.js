@@ -99,4 +99,6 @@
 //     />
 // </GridItem>
 
-console.log(Math.trunc(10/3));
+if (typeof tes === 'undefined' ){
+    console.log("anjay");
+}
