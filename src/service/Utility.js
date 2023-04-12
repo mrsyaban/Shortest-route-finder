@@ -5,8 +5,8 @@ function convertFile(jsonFile) {
 
     // edit the nodes
     inputNodes.forEach(node => {
-        node.x = node.x*20;
-        node.y = node.y*20;
+        node.x = node.x*100000;
+        node.y = node.y*100000;
         node.label = node.id;
     });
     console.log("masok");

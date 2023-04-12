@@ -73,38 +73,41 @@ export const RunUCS = (graph, matrix, start, goal, callback) => {
   const ucs = new UCS(Number(start)-1, Number(goal)-1, matrix);
   ucs.search();
   const resPath = ucs.shortestPath();
-  console.log("resPath: ", resPath);
-  
-  // color nodes
-  const newNodes = [];
-  for (let i = 0; i < graph.nodes.length; i++) {
-    const node = { ...graph.nodes[i] };
-    node.color = "#005073";
-    if (resPath.some((res) => res+1 === Number(graph.nodes[i].id))) {
-      node.color = '#339900';
-    }
-    newNodes.push(node);
-  }
-
-  // color edges
-  const newEdges = [];
-  for (let i = 0; i < graph.edges.length; i++) {
-    const edge = { ...graph.edges[i] };
-    edge.color = "#001822";
-    for (let j = 0; j < resPath.length - 1; j++) {
-      if (isResult(String(resPath[j]+1), String(resPath[j + 1]+1), edge)) {
-        console.log("edge: ", resPath[j], resPath[j+1]);
-        edge.color = '#339900';
-      }
-    }
-    newEdges.push(edge);
-  }
 
   const newGraph = {
-    nodes: newNodes,
-    edges: newEdges,
+    nodes: [],
+    edges: [],
   };
 
+  if (resPath !== null){
+    console.log("resPath: ", resPath);
+    
+    // color nodes
+    const newNodes = [];
+    for (let i = 0; i < graph.nodes.length; i++) {
+      const node = { ...graph.nodes[i] };
+      node.color = "#005073";
+      if (resPath.some((res) => res+1 === Number(graph.nodes[i].id))) {
+        node.color = '#339900';
+      }
+      newNodes.push(node);
+    }
+    // color edges
+    const newEdges = [];
+    for (let i = 0; i < graph.edges.length; i++) {
+      const edge = { ...graph.edges[i] };
+      edge.color = "#001822";
+      for (let j = 0; j < resPath.length - 1; j++) {
+        if (isResult(String(resPath[j]+1), String(resPath[j + 1]+1), edge)) {
+          console.log("edge: ", resPath[j], resPath[j+1]);
+          edge.color = '#339900';
+        }
+      }
+      newEdges.push(edge);
+    }
+    newGraph.nodes = newNodes;
+    newGraph.edges = newEdges;
+  }
   callback(newGraph, ucs.cost);
 };
 
