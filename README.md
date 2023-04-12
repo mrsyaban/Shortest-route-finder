@@ -1,68 +1,98 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<div align="center">
+  <h1 align="center">Shortest Route Finding</h1>
 
-## Available Scripts
+  <p align="center">
+    Implementasi Algoritma UCS dan A* untuk Menentukan Lintasan Terpendek
+    <br />
+  </p>
+</div>
 
-In the project directory, you can run:
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+  </ol>
+</details>
 
-### `npm start`
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Project ini berisi program untuk menemukan lintasan terpendek pada suatu graf, graf dibangkitkan dari masukan file yang berisi matriks ketetanggan dan juga koordinat masing-masing simpul (**Program hanya dapat masukan file JSON dan id nodes selalu dimulai dari 1 menaik**). User kemudian memasukkan simpul mulai dan simpul tujuan yang ingin dicari lintasan terpendeknya sesuai label graf yang ditampilkan, lalu memilih algoritma yang ingin digunakan. Setelah itu 
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `npm test`
+### Built With
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This Project was built with some tools
 
-### `npm run build`
+* npm v9.6.0
+* Node.js v18.7.0
+* @chakra-ui/react v2.5.5
+* @emotion/react@11.10.6
+* @emotion/styled@11.10.6
+* @googlemaps/js-api-loader@1.15.1
+* framer-motion v6.5.1
+* js-priority-queue v0.1.5
+* leaflet v1.9.3
+* react-graph-vis v1.0.7
+* react-leaflet v4.2.1
+* react-scripts v5.0.1
+* react v18.2.0
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+<!-- GETTING STARTED -->
+## Getting Started
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Prerequisites
+This is an example of how to list things you need to use the software and how to install them.
+* npm v9.6.0
+  ```sh
+  npm install npm@9.6.0 -g
+  ```
+* @chakra-ui
+  ```sh
+  npm i @chakra-ui/react @emotion/react @emotion/styled framer-motion
+  ```
+* react-leaflet v4.2.1
+  ```sh
+  npm install react-graph-vis
+  ```
+* react-graph-vis v1.0.7
+  ```sh
+  npm install react-graph-vis
+  ```
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Installation
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Clone this repo
+2. Install all <a href="#prerequisites">prerequisite</a>
+3. type `npm install` in this repository directory
+4. run `npm start`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<!-- USAGE EXAMPLES -->
+## Usage
+![without map](https://github.com/mrsyaban/Tucil3_13521041_13521119/blob/main/public/lampiran.png)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![with map](https://github.com/mrsyaban/Tucil3_13521041_13521119/blob/main/public/lampiran2.png)
 
-## Learn More
+<!-- CONTACT -->
+## Contact Author
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+| Nama                  | NIM      | Email |
+| --------------------- | -------- | ----- |
+| Muhammad Hanan   | 13521041 | 13521041@std.stei.itb.ac.id |
+| Muhammad Rizky Sya'ban      | 13521119 | 13521119@std.stei.itb.ac.id |
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Project Link: [https://github.com/mrsyaban/Tucil3_13521041_13521119.git](https://github.com/mrsyaban/Tucil3_13521041_13521119.git)
 
-### Code Splitting
+<!-- ACKNOWLEDGMENTS -->
+## Acknowledgments
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+- Many thanks to [Dr. Ir. Rinaldi Munir, M.T.](https://informatika.stei.itb.ac.id/~rinaldi.munir/) for his guidance and support
 
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+<br/>
+<h4 align="center">
+  Created by @Hanan and Rizky<br/>
+  April 2023
+</h4>
+<hr>
