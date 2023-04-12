@@ -17,7 +17,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Project ini berisi program untuk menemukan lintasan terpendek pada suatu graf, graf dibangkitkan dari masukan file yang berisi matriks ketetanggan dan juga koordinat masing-masing simpul (**Program hanya dapat masukan file JSON dan id nodes selalu dimulai dari 1 menaik**). User kemudian memasukkan simpul mulai dan simpul tujuan yang ingin dicari lintasan terpendeknya sesuai label graf yang ditampilkan, lalu memilih algoritma yang ingin digunakan. Setelah menekan tombol run lintasan terpendek akan ditampilkan dengan warna hijau.
+Project ini berisi program untuk menemukan lintasan terpendek pada suatu graf, graf dibangkitkan dari masukan file yang berisi matriks ketetanggan dan juga koordinat masing-masing simpul (**Program hanya dapat masukan file JSON dan id nodes selalu dimulai dari 1 menaik contoh file terlampir di `test/sample.json`**). User kemudian memasukkan simpul mulai dan simpul tujuan yang ingin dicari lintasan terpendeknya sesuai label graf yang ditampilkan, lalu memilih algoritma yang ingin digunakan. Setelah menekan tombol run lintasan terpendek akan ditampilkan dengan warna hijau.
 
 
 ### Built With
