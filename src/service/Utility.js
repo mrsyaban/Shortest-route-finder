@@ -6,6 +6,7 @@ function convertFile(jsonFile) {
     // edit the nodes
     inputNodes.forEach(node => {
         node.label = node.id;
+        node.size = Math.floor(Math.random() * 15) + 10;
     });
     console.log("masok");
     // edit the edge 
@@ -18,10 +19,11 @@ function convertFile(jsonFile) {
                 if (adjMatrix[i][j] !== 0 && i!==j) {
                     const edge = {};
                     edge.id = String(count);
-                    edge.length = adjMatrix[i][j];
+                    edge.length = Number((adjMatrix[i][j]/(10)).toFixed(2));
                     edge.source = String(j+1);
                     edge.target = String(i+1);
-                    edge.label = "Node" + String(count)
+                    edge.label = String(adjMatrix[i][j]);
+                    edge.type = 'curvedLine';
                     edges.push(edge);
                     count++;
                 }
@@ -41,8 +43,10 @@ export const HandleFileChange = (event, callback) => {
     
       reader.onload = (event) => {
         const data = event.target.result;
+        const obj = JSON.parse(data);
+        const adjMatrix = obj.adjacencyMatrix[0].map(row => row.slice());
         const converted = convertFile(data);
-        callback(converted);
+        callback(converted, adjMatrix);
       };
     
       reader.readAsText(file);

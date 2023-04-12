@@ -69,6 +69,7 @@ function isResult(start, goal, edge) {
 
 export const RunUCS = (graph, matrix, start, goal, callback) => {
   console.log('start: ', start, 'goal: ', goal);
+  console.log('matrix: ', matrix);
   const ucs = new UCS(Number(start), Number(goal), matrix);
   ucs.search();
   const resPath = ucs.shortestPath();

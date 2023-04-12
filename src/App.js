@@ -5,7 +5,6 @@ import {
   Input,
   Flex,
   Grid,
-  theme,
   Heading,
   GridItem,
   Button,
@@ -19,6 +18,7 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   AlertDialogCloseButton,
+  AspectRatio
 } from '@chakra-ui/react';
 // import NetworkGraph from './components/NetworkGraph';
 import Maps from './components/Maps';
@@ -29,6 +29,19 @@ import { Sigma } from 'react-sigma';
 import { RunUCS } from './service/UCS';
 import { RunAStar } from './service/AStar';
 import { useDisclosure } from '@chakra-ui/react';
+
+import { extendTheme } from "@chakra-ui/react"
+
+// 2. Call `extendTheme` and pass your custom values
+const theme = extendTheme({
+  colors: {
+    brand: {
+      100: "teal.500",
+      // ...
+      900: "#1a202c",
+    },
+  },
+})
 
 const NoAlgorithmAlert = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -101,18 +114,11 @@ const App = () => {
   };
 
   const onFileChange = event => {
-    HandleFileChange(event, convertedMatrix => {
+    HandleFileChange(event, (convertedMatrix, adjMatrix) => {
       setData(convertedMatrix);
+      setMatrix(adjMatrix);
+      console.log("hanan:", adjMatrix);
     });
-
-    const reader = new FileReader();
-    reader.onload = event => {
-      setMatrix(
-        JSON.parse(event.target.result).adjacencyMatrix[0].map(row =>
-          row.slice()
-        )
-      );
-    };
   };
 
   const onAlgoChange = event => {
@@ -143,21 +149,17 @@ const App = () => {
   return (
     <ChakraProvider theme={theme}>
       <Grid
-        h="100vh"
-        templateColumns="repeat(5,1fr)"
-        templateRows="auto 1fr auto"
-        gap={4}
+        h = '1000px'
+        templateRows='repeat(8, 1fr)'
+        templateColumns='repeat(5, 1fr)'
+        gap={2}
       >
-        <GridItem
-          as="aside"
-          colSpan="1"
-          rowSpan="2"
-          bg="#1d3258"
-          minHeight="50"
-          py="30px"
-          borderRadius="20px 20px 20px 20px"
-          justifySelf="center"
-        >
+        <GridItem colSpan={5} rowSpan={1} py='5'>
+            <Heading fontSize="2.5em" textAlign={'center'}>
+              Shortest Path Finder
+            </Heading>
+        </GridItem>
+        <GridItem colSpan={1} rowSpan={7} margin='10px' rounded='md' bg='#1d3258'>
           <Input
             colorScheme="blue"
             type="file"
@@ -175,7 +177,7 @@ const App = () => {
             <option value="2">UCS</option>
           </Select>
 
-          <Button gridRow="3" colorScheme="blue" onClick={runShortestPath}>
+          <Button gridRow="3" bgGradient="linear(to-r, teal.500, blue.500)" _hover={{ bgGradient: "linear(to-r, blue.500, teal.500)" }} colorScheme="blue" onClick={runShortestPath}>
             Run
           </Button>
 
@@ -196,20 +198,13 @@ const App = () => {
             />
           </Stack>
         </GridItem>
-        <GridItem colSpan="4" rowSpan="1" alignItems="center">
-          <Flex py="20px" alignItems="center">
-            <Heading as="h1" fontSize="2.5em" textAlign={'center'}>
-              Shortest Path Finder
-            </Heading>
-          </Flex>
+
+        <GridItem colSpan={4} rowSpan={6} rounded='md' py='10' bg='papayawhip'>
+
+        <NetworkGraph/>
         </GridItem>
-        <GridItem
-          colSpan="4"
-          rowSpan="3"
-          bg="#1d3258"
-          borderRadius="20px 20px 20px 20px"
-        >
-          <NetworkGraph />
+
+        <GridItem colSpan={4} rowSpan={1} rounded='md' bg='#1d3258'>
         </GridItem>
       </Grid>
     </ChakraProvider>
