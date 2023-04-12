@@ -90,13 +90,15 @@ class UCS2 {
     search(){
         while(this.proc !== this.goalId){
             
+            
+            // pop active
+            this.proc = this.active[0];
+
             // check if goal
             if (this.proc.getId() === this.goalId){
                 return this.proc.getPath();
             }
 
-            // pop active
-            this.proc = this.active[0];
             this.proc = null;
             this.proc.hasVisited();
             this.active.shift();
@@ -119,6 +121,7 @@ class UCS2 {
                 return [];
             }
         }
+        return this.goal.getPath();
     }
 }
 
