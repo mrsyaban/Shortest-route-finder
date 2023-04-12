@@ -7,8 +7,9 @@ function convertFile(jsonFile) {
 
     // edit the nodes
     inputNodes.forEach(node => {
+        node.x = node.x*20;
+        node.y = node.y*20;
         node.label = node.id;
-        node.size = 30;
     });
     console.log("masok");
     // edit the edge 
@@ -21,10 +22,9 @@ function convertFile(jsonFile) {
                 if (adjMatrix[i][j] !== 0 && i<j) {
                     const edge = {};
                     edge.id = String(count);
-                    edge.source = String(j+1);
-                    edge.target = String(i+1);
-                    edge.label = "Panjang: " + String(adjMatrix[i][j]);
-                    edge.type = 'curvedLine';
+                    edge.from = String(j+1);
+                    edge.to = String(i+1);      
+                    edge.label = String(adjMatrix[i][j]);
                     edges.push(edge);
                     count++;
                 }

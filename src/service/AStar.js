@@ -83,9 +83,9 @@ export const RunAStar = (graph, matrix, start, goal, coordinates, callback) => {
     const newNodes = [];
     for (let i = 0; i < graph.nodes.length; i++) {
       const node = { ...graph.nodes[i] };
-      node.color = "#000000";
+      node.color = "#005073";
       if (resPath.some((res) => res+1 === Number(graph.nodes[i].id))) {
-        node.color = '#b71010';
+        node.color = '#339900';
       }
       newNodes.push(node);
     }
@@ -94,11 +94,11 @@ export const RunAStar = (graph, matrix, start, goal, coordinates, callback) => {
     const newEdges = [];
     for (let i = 0; i < graph.edges.length; i++) {
       const edge = { ...graph.edges[i] };
-      edge.color = "#000000";
+      edge.color = "#001822";
       for (let j = 0; j < resPath.length - 1; j++) {
         if (isResult(String(resPath[j]+1), String(resPath[j + 1]+1), edge)) {
           console.log("edge: ", resPath[j], resPath[j+1]);
-          edge.color = '#b71010';
+          edge.color = '#339900';
         }
       }
       newEdges.push(edge);
