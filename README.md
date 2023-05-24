@@ -1,5 +1,5 @@
 <div align="center">
-  <h1 align="center">Shortest Route Finding</h1>
+  <h1 align="center">Shortest Route Finder</h1>
 
   <p align="center">
     Implementasi Algoritma UCS dan A* untuk Menentukan Lintasan Terpendek
