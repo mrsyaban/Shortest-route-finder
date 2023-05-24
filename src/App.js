@@ -150,7 +150,7 @@ const App = () => {
 
   return (
     <ChakraProvider theme={theme}>
-      <Grid templateRows="repeat(20, 1fr)" templateColumns="repeat(5, 1fr)" gap={10} height="928px" width="auto" bg="#ccd6db">
+      <Grid templateRows="repeat(20, 1fr)" templateColumns="repeat(5, 1fr)" gap={10} height="929px" width="auto" bg="#ccd6db">
         <GridItem colSpan={5} rowSpan={1} py="5" color="#3d4041">
           <Heading fontSize="2.5em" textAlign={"center"}>
             Shortest Route Finder
