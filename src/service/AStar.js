@@ -70,7 +70,7 @@ export const RunAStar = (graph, matrix, start, goal, coordinates, callback) => {
         const dy = coordinates[node][1] - coordinates[Number(goal)-1][1];
         return Math.sqrt(dx * dx + dy * dy);
     };
-
+    
     console.log('start: ', start, 'goal: ', goal);
     console.log('matrix: ', matrix);
     const astar = new AStar(Number(start)-1, Number(goal)-1, matrix, heuristic);
@@ -110,11 +110,12 @@ export const RunAStar = (graph, matrix, start, goal, coordinates, callback) => {
       
         newGraph.nodes = newNodes;
         newGraph.edges = newEdges;
-      
     }
-    callback(newGraph, astar.gScore.get(Number(goal)-1));
+    const temp = astar.gScore.get(Number(goal)-1);
+    const dist = temp ;
+    console.log(typeof(dist));
+    callback(newGraph, dist);
 };
-  
   
 // // Contoh
 // const start = 0;

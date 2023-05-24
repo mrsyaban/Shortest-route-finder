@@ -5,10 +5,25 @@ import { HandleFileChange } from "./service/Utility";
 import { RunUCS } from "./service/UCS";
 import { RunAStar } from "./service/AStar";
 import NoAlgorithmAlert from "./components/Alerts";
-import { ChakraProvider, Input, Grid, Heading, GridItem, Button, Select, Stack, theme, Switch, FormControl, FormLabel, Text } from "@chakra-ui/react";
+import { ChakraProvider, Input, Grid, Heading, GridItem, Button, Select, Stack, theme, Switch, FormControl, FormLabel, Text, Link } from "@chakra-ui/react";
 
 const App = () => {
-  const [data, setData] = React.useState({ nodes: [{ id: "1", x: 0, y: 0 }], edges: [] });
+  const [data, setData] = React.useState({
+    nodes: [
+      { id: "1", label: "1", x: 0, y: 0 },
+      { id: "2", label: "2", x: 100, y: 0 },
+      { id: "3", label: "3", x: 0, y: 100 },
+      { id: "4", label: "4", x: 100, y: 100 },
+      { id: "5", label: "5", x: 50, y: 50 },
+    ],
+    edges: [
+      { from: "1", to: "2" },
+      { from: "1", to: "3" },
+      { from: "2", to: "3" },
+      { from: "2", to: "4" },
+      { from: "4", to: "5" },
+    ],
+  });
   const [algo, setAlgo] = React.useState(0);
   const [start, setStart] = React.useState("");
   const [goal, setGoal] = React.useState("");
@@ -78,8 +93,10 @@ const App = () => {
 
   // show dist
   const ShowDist = () => {
-    if (dist === null || dist === -1) {
+    if (dist === null) {
       return <Text color="tomato"> Path Not Found </Text>;
+    } else if (dist === -1.0){
+      return <Text color="tomato">  </Text>;
     } else {
       return (
         <Text fontSize="xl" color="#263A5F">
@@ -133,10 +150,10 @@ const App = () => {
 
   return (
     <ChakraProvider theme={theme}>
-      <Grid templateRows="repeat(20, 1fr)" templateColumns="repeat(5, 1fr)" gap={10} height="1080px" width="1920px" bg="#ccd6db">
+      <Grid templateRows="repeat(20, 1fr)" templateColumns="repeat(5, 1fr)" gap={10} height="925px" width="auto" bg="#ccd6db">
         <GridItem colSpan={5} rowSpan={1} py="5" color="#3d4041">
           <Heading fontSize="2.5em" textAlign={"center"}>
-            Shortest Path Finder
+            Shortest Route Finder
           </Heading>
         </GridItem>
 
@@ -163,7 +180,7 @@ const App = () => {
                   }}
                 />
               </Stack>
-              <Select variant="filled" placeholder="Select Algorithm" onChange={onAlgoChange}>
+              <Select variant="filled" onChange={onAlgoChange}>
                 <option value="1">A*</option>
                 <option value="2">UCS</option>
               </Select>
@@ -204,9 +221,22 @@ const App = () => {
             </GridItem>
           </Grid>
         </GridItem>
-
-        <GridItem colSpan={5} rowSpan={1} bg="#263A5F" px="10px">
-          <Text>IF2240 Strategi Algoritma</Text>
+        
+        <GridItem colSpan={5} rowSpan={1} bg="#263A5F" px="10px" textAlign={"center"}>
+          <Text color="white">
+            © 2023 by &nbsp; 
+            <Link href="https://github.com/mrsyaban" isExternal>
+              mrsyaban
+            </Link>
+            •
+            <Link href="https://github.com/tarsn" isExternal>
+              tarsn
+            </Link>
+            &nbsp; | &nbsp;
+            <Link href="https://github.com/mrsyaban/Shortest-route-finder" isExternal>
+            explore the docs
+            </Link>
+          </Text>
         </GridItem>
       </Grid>
     </ChakraProvider>

@@ -98,18 +98,19 @@ class UCS2 {
             if (this.proc.getId() === this.goalId){
                 return this.proc.getPath();
             }
+            console.log(this.proc.isVisited());
 
-            this.proc = null;
             this.proc.hasVisited();
             this.active.shift();
 
             // visit all adjacent
             for (let adjNode in this.proc.getAdjacent()){
+                console.log(typeof adjNode);
                 //check if visited
                 if (adjNode.isVisited()){
                     // copy node baru
                     const newNode = {...adjNode};
-                    newNode.setDistance(adjNode.getTotal()+this.proc.getAdjacent().adjNode);
+                    newNode.setDistance(adjNode.getTotal()+this.proc.getAdjacent()[adjNode]);
                     newNode.addPath(this.proc.id);
     
                     // push ke active
